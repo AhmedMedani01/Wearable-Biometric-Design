@@ -1,0 +1,390 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "feceb6fc-c8d2-4071-b886-114834692949")
+	(paper "A4")
+	(lib_symbols)
+	(sheet
+		(at 163.83 60.96)
+		(size 33.02 29.21)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 255 242 106 1.0000)
+		)
+		(uuid "14ccb2aa-aa32-49e6-8df3-f949bbb25662")
+		(property "Sheetname" "BIOMETRIC AFE"
+			(at 163.83 60.2484 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Biometric.kicad_sch"
+			(at 163.83 90.7546 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "wearableHardware"
+				(path "/feceb6fc-c8d2-4071-b886-114834692949"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 102.87 58.42)
+		(size 50.8 83.82)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 255 242 106 1.0000)
+		)
+		(uuid "c4492211-6d90-4669-aff9-42e346ab96bb")
+		(property "Sheetname" "COMPUTATION & COMMS"
+			(at 102.87 57.7084 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "MCU.kicad_sch"
+			(at 102.87 142.8246 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "SPI1_CLK" input
+			(at 153.67 68.58 0)
+			(uuid "6eb55f3d-1ae4-4d18-9ba5-cef1b8bada17")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI1_MOSI" output
+			(at 153.67 72.39 0)
+			(uuid "95ade242-205a-419d-bdb8-9245f16c1491")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI1_CS" output
+			(at 153.67 76.2 0)
+			(uuid "b9ba8b6f-2e8c-4042-8e98-58bf90d6ac9b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI2_CS" output
+			(at 153.67 114.3 0)
+			(uuid "1e1f0b42-cb6e-43ca-aebd-33c5a9ff710d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI2_BLK" output
+			(at 153.67 118.11 0)
+			(uuid "88451df7-1b98-425a-adf8-cf123ee9eb66")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI2_DC" output
+			(at 153.67 121.92 0)
+			(uuid "21ca1f61-7ed1-4ef8-8d6f-4049991df525")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI2_RST" output
+			(at 153.67 125.68 0)
+			(uuid "2e94a694-4731-458a-ab48-5c43a371754f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI2_MOSI" output
+			(at 153.67 128.27 0)
+			(uuid "ebcab540-41fe-4d3f-a7e7-2f2449248cb0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI2_SCLK" output
+			(at 153.67 132.08 0)
+			(uuid "2c66e09c-a224-4cce-acca-4685db06a9b2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HAPTIC_PWM" output
+			(at 102.87 90.17 180)
+			(uuid "927b60ff-17ae-46ab-8f95-d556bdf6e231")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SPI1_MISO" input
+			(at 153.67 64.77 0)
+			(uuid "09833e4a-d863-41fd-b270-aa6ec00c0b45")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "DRDY" input
+			(at 153.67 80.01 0)
+			(uuid "4638a05e-ab2b-4827-a17b-5179efd3a405")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "I2C_SDA" bidirectional
+			(at 102.87 78.74 180)
+			(uuid "fc939cbd-c2c7-4616-adc8-b4cc1d995398")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "I2C_SCL" bidirectional
+			(at 102.87 82.55 180)
+			(uuid "db72e4b0-d7f0-4028-bafb-de894276e315")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "BTN_EVENT" input
+			(at 102.87 86.36 180)
+			(uuid "8af241cd-2c59-404b-9be3-f2a000164c14")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "wearableHardware"
+				(path "/feceb6fc-c8d2-4071-b886-114834692949"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 113.03 20.32)
+		(size 33.02 25.4)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 255 242 106 1.0000)
+		)
+		(uuid "de432d47-b28b-40ff-9613-f317acec4548")
+		(property "Sheetname" "Power System"
+			(at 113.03 19.6084 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "power.kicad_sch"
+			(at 113.03 46.3046 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "Position X/Y: 15 / 15" ""
+			(at 113.03 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "wearableHardware"
+				(path "/feceb6fc-c8d2-4071-b886-114834692949"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 55.88 74.93)
+		(size 31.75 22.86)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 255 242 106 1.0000)
+		)
+		(uuid "df058134-1e0c-4df6-b0fe-fb66061800f6")
+		(property "Sheetname" "Motion & Hepatics"
+			(at 55.88 74.2184 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "motion.kicad_sch"
+			(at 55.88 98.3746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "Field2" ""
+			(at 55.88 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "wearableHardware"
+				(path "/feceb6fc-c8d2-4071-b886-114834692949"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 165.1 111.76)
+		(size 33.02 27.94)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 255 242 106 1.0000)
+		)
+		(uuid "e995ff89-f79b-4195-a9ca-6535d6e6ffb6")
+		(property "Sheetname" "Display"
+			(at 165.1 111.0484 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "display.kicad_sch"
+			(at 165.1 140.2846 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "wearableHardware"
+				(path "/feceb6fc-c8d2-4071-b886-114834692949"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)
