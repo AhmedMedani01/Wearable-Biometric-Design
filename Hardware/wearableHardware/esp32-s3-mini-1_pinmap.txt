@@ -28,11 +28,13 @@
 ================================================================================
   Pin │ Name    │ Type  │ Connection Chain
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
-  45  │ EN      │ Input │    +3.3V ─── R_EN_pu[10k, 0402, 1%] ────┬── pin45 EN
+  45  │ EN      │ Input │    +3.3V ─── R_EN_pu[10k, 0402, 1%] ──┬── pin45 EN
       │         │       │                                          │
-      │         │       │                                   C_EN[1uF, 0402, X7R]
+      │         │       │                                     C_EN[1uF, 0402, X7R]
       │         │       │                                          │
-      │         │       │   SW_RST (momentary to GND) ─────────────┤── GND
+      │         │       │   SW_RST (momentary to GND) ──────────────┤ EN node
+      │         │       │                                          │
+      │         │       │                                          GND
       │         │       │
       │         │       │   RC delay REQUIRED: R=10k + C=1uF ensures
       │         │       │   +3.3V rail is stable before EN rises.
@@ -54,13 +56,13 @@
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
    5  │ IO1     │ I/O   │    +3.3V ─── R_I2C_pu[4.7k, 0402, 1%] ──── I2C_SDA
       │         │       │                                               │
-      │         │       │                                       BMI270 pin 13 (SDA)
+      │         │       │                                       BMI270 SDI (SDA)
       │         │       │
       │         │       │   Net label: I2C_SDA
 
    6  │ IO2     │ I/O   │    +3.3V ─── R_I2C_pu[4.7k, 0402, 1%] ──── I2C_SCL
       │         │       │                                               │
-      │         │       │                                       BMI270 pin 14 (SCL)
+      │         │       │                                       BMI270 SCK (SCL)
       │         │       │
       │         │       │   Net label: I2C_SCL
       │         │       │   Note: NOT a strapping pin on ESP32-S3.
@@ -72,12 +74,12 @@
 ================================================================================
   Pin │ Name    │ Type  │ Connection Chain
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
-  16  │ IO12    │ I/O   │   pin16 IO12 ─── SPI1_SCLK ──→ ADS1291 pin 13 (SCLK)
-  15  │ IO11    │ I/O   │   pin15 IO11 ─── SPI1_MOSI ──→ ADS1291 pin 14 (DIN)
-  17  │ IO13    │ I/O   │   pin17 IO13 ←── SPI1_MISO ──→ ADS1291 pin 15 (DOUT)
-  18  │ IO14    │ I/O   │   pin18 IO14 ─── SPI1_CS   ──→ ADS1291 pin 16 (~CS)
+  16  │ IO12    │ I/O   │   pin16 IO12 ─── SPI1_SCLK ──→ ADS1291 SCLK
+  15  │ IO11    │ I/O   │   pin15 IO11 ─── SPI1_MOSI ──→ ADS1291 DIN
+  17  │ IO13    │ I/O   │   pin17 IO13 ←── SPI1_MISO ──→ ADS1291 DOUT
+  18  │ IO14    │ I/O   │   pin18 IO14 ─── SPI1_CS   ──→ ADS1291 ~CS
       │         │       │
-  25  │ IO21    │ I/O   │   pin25 IO21 ←── DRDY ──────→ ADS1291 pin 17 (~DRDY)
+  25  │ IO21    │ I/O   │   pin25 IO21 ←── DRDY ──────→ ADS1291 ~DRDY
       │         │       │   IRQ from AFE (data ready)
       │         │       │   Note: Route separately from SPI2 — opposite sides of PCB
 
@@ -86,11 +88,11 @@
 ================================================================================
   Pin │ Name    │ Type  │ Connection Chain
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
-   8  │ IO4     │ I/O   │   pin08 IO4  ─── SPI2_CS  ──→ GC9A01 pin 3 (~CS)
-  19  │ IO15    │ I/O   │   pin19 IO15 ─── SPI2_DC  ──→ GC9A01 pin 4 (DC)
-  20  │ IO16    │ I/O   │   pin20 IO16 ─── SPI2_RST ──→ GC9A01 pin 5 (~RST)
-  21  │ IO17    │ I/O   │   pin21 IO17 ─── SPI2_MOSI ─→ GC9A01 pin 6 (SDA/MOSI)
-  22  │ IO18    │ I/O   │   pin22 IO18 ─── SPI2_SCLK ─→ GC9A01 pin 7 (SCL)
+   8  │ IO4     │ I/O   │   pin08 IO4  ─── SPI2_CS  ──→ GC9A01 ~CS
+  19  │ IO15    │ I/O   │   pin19 IO15 ─── SPI2_DC  ──→ GC9A01 DC
+  20  │ IO16    │ I/O   │   pin20 IO16 ─── SPI2_RST ──→ GC9A01 ~RST
+  21  │ IO17    │ I/O   │   pin21 IO17 ─── SPI2_MOSI ─→ GC9A01 MOSI (SDA)
+  22  │ IO18    │ I/O   │   pin22 IO18 ─── SPI2_SCLK ─→ GC9A01 SCLK
 
 ================================================================================
   DISPLAY BACKLIGHT PWM  (via BSS138 N-FET)
@@ -167,10 +169,10 @@
   Pin │ Name    │ Type  │ Connection Chain
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
   23  │ USB_D-  │ I/O   │   pin23 USB_D- ─── USB-C D-  (direct trace)
-      │ IO19    │       │   Series termination: R_USB[27, 0402, 1%] recommended
+      │ IO19    │       │   Series termination: R_USB[22, 0402, 1%] recommended
       │ (alt)   │       │   if trace > 50mm (place near ESP32)
   24  │ USB_D+  │ I/O   │   pin24 USB_D+ ─── USB-C D+  (direct trace)
-      │ IO20    │       │   Series termination: R_USB[27, 0402, 1%] recommended
+      │ IO20    │       │   Series termination: R_USB[22, 0402, 1%] recommended
       │ (alt)   │       │   if trace > 50mm (place near ESP32)
       │         │       │
       │         │       │   VBUS ESD protection (at USB-C connector):
@@ -261,7 +263,7 @@
   R_batt_top             │ 100k 1%   │  1  │ Battery divider top
   R_batt_bot             │ 100k 1%   │  1  │ Battery divider bottom
   R_AAF1, R_AAF2         │ 4.99k 0.1% │ 2 │ ADS1291 anti-alias (matched pair)
-  R_USB_series           │ 27 1%     │  2  │ USB D+/D- series termination (optional)
+  R_USB_series           │ 22 1%     │  2  │ USB D+/D- series termination (optional)
   R_CC1, R_CC2           │ 5.1k 1%   │  2  │ USB-C CC1/CC2 to GND
   R_RLD_fb               │ 100k 1%   │  1  │ ADS1291 RLD feedback
 
