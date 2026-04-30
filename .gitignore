@@ -1,0 +1,22 @@
+# KiCad lock files
+*.lck
+
+# KiCad backups
+*-backups/
+**/wearableHardware-backups/
+
+# KiCad cache
+*.kicad_sch-bak
+*.kicad_pcb-bak
+__x86_64__/
+fp-info-cache
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
