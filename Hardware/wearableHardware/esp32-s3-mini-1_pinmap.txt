@@ -12,260 +12,277 @@
 ================================================================================
   POWER & GROUND
 ================================================================================
-  Pin │ Name    │ Type  │ Connection Chain
+  Pin | Name    | Type  | Connection Chain
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
-   1  │ GND     │ PWR   │ → GND plane (DGND)
-   2  │ GND     │ PWR   │ → GND plane (DGND)
-   3  │ VDD3P3  │ PWR   │ → +3.3V rail
-      │         │       │   ├── C_dec1[100nF, 0402, X7R, 6.3V] ─── GND
-      │         │       │   └── C_bulk[10uF, 0603, X7R, 6.3V]  ─── GND
-      │         │       │   Source: XC6206P332 LDO output (+3.3V)
-  42  │ GND     │ PWR   │ → GND plane (DGND)
-  43  │ GND     │ PWR   │ → GND plane (DGND)
+   1  | GND     | PWR   | -> GND plane (DGND)
+   2  | GND     | PWR   | -> GND plane (DGND)
+   3  | VDD3P3  | PWR   | -> +3.3V rail
+      |         |       |   +-- C_dec1[100nF, 0402, X7R, 6.3V] --- GND
+      |         |       |   +-- C_bulk[10uF, 0603, X7R, 6.3V]  --- GND
+      |         |       |   Source: XC6206P332 LDO output (+3.3V)
+  42  | GND     | PWR   | -> GND plane (DGND)
+  43  | GND     | PWR   | -> GND plane (DGND)
 
 ================================================================================
   CONTROL & RESET
 ================================================================================
-  Pin │ Name    │ Type  │ Connection Chain
+  Pin | Name    | Type  | Connection Chain
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
-  45  │ EN      │ Input │    +3.3V ─── R_EN_pu[10k, 0402, 1%] ──┬── pin45 EN
-      │         │       │                                          │
-      │         │       │                                     C_EN[1uF, 0402, X7R]
-      │         │       │                                          │
-      │         │       │   SW_RST (momentary to GND) ──────────────┤ EN node
-      │         │       │                                          │
-      │         │       │                                          GND
-      │         │       │
-      │         │       │   RC delay REQUIRED: R=10k + C=1uF ensures
-      │         │       │   +3.3V rail is stable before EN rises.
-      │         │       │   Without it: brown-out resets on power-on
-      │         │       │   (especially with Li-Po slow ramp).
-      │         │       │   EN LOW >2ms resets chip.
+  45  | EN      | Input |    +3.3V --- R_EN_pu[10k, 0402, 1%] --+-- pin45 EN
+      |         |       |                                          |
+      |         |       |                                     C_EN[1uF, 0402, X7R]
+      |         |       |                                          |
+      |         |       |   SW_RST (momentary to GND) --------------+ EN node
+      |         |       |                                          |
+      |         |       |                                          GND
+      |         |       |
+      |         |       |   RC delay REQUIRED: R=10k + C=1uF ensures
+      |         |       |   +3.3V rail is stable before EN rises.
+      |         |       |   Without it: brown-out resets on power-on
+      |         |       |   (especially with Li-Po slow ramp).
+      |         |       |   EN LOW >2ms resets chip.
 
-   4  │ IO0     │ I/O   │    +3.3V ─── R_boot_pu[10k, 0402, 1%] ──┬── pin04 IO0
-      │  (S)    │       │                                           │
-      │         │       │   SW_BOOT (momentary to GND) ─────────────┘
-      │         │       │   Strapping: LOW = download mode (program),
-      │         │       │   HIGH = normal boot (default via pull-up)
-      │         │       │   Do NOT add external capacitance
+   4  | IO0     | I/O   |    +3.3V --- R_boot_pu[10k, 0402, 1%] --+-- pin04 IO0
+      |  (S)    |       |                                           |
+      |         |       |   SW_BOOT (momentary to GND) -------------+
+      |         |       |   Strapping: LOW = download mode (program),
+      |         |       |   HIGH = normal boot (default via pull-up)
+      |         |       |   Do NOT add external capacitance
 
 ================================================================================
-  I2C BUS — BMI270 IMU  (3.3V domain, 400kHz)
+  I2C BUS 0 — BMI270 IMU  (3.3V domain, 400kHz)
 ================================================================================
-  Pin │ Name    │ Type  │ Connection Chain
+  Pin | Name    | Type  | Connection Chain
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
-   5  │ IO1     │ I/O   │    +3.3V ─── R_I2C_pu[4.7k, 0402, 1%] ──── I2C_SDA
-      │         │       │                                               │
-      │         │       │                                       BMI270 SDI (SDA)
-      │         │       │
-      │         │       │   Net label: I2C_SDA
+   5  | IO1     | I/O   |    +3.3V --- R_I2C0_pu[4.7k, 0402, 1%] --- I2C0_SDA
+      |         |       |                                               |
+      |         |       |                                       BMI270 SDI (SDA)
+      |         |       |
+      |         |       |   Net label: I2C_SDA
 
-   6  │ IO2     │ I/O   │    +3.3V ─── R_I2C_pu[4.7k, 0402, 1%] ──── I2C_SCL
-      │         │       │                                               │
-      │         │       │                                       BMI270 SCK (SCL)
-      │         │       │
-      │         │       │   Net label: I2C_SCL
-      │         │       │   Note: NOT a strapping pin on ESP32-S3.
-      │         │       │   (Confusion with original ESP32 — safe as I2C clock.)
+   6  | IO2     | I/O   |    +3.3V --- R_I2C0_pu[4.7k, 0402, 1%] --- I2C0_SCL
+      |         |       |                                               |
+      |         |       |                                       BMI270 SCK (SCL)
+      |         |       |
+      |         |       |   Net label: I2C_SCL
+      |         |       |   Note: NOT a strapping pin on ESP32-S3.
+      |         |       |   (Confusion with original ESP32 — safe as I2C clock.)
 
 ================================================================================
   SPI BUS 1 (QUIET) — ADS1291 Biopotential AFE  (1MHz, 3.3V)
-  Per reference design: GPIO12=SCLK, GPIO11=MOSI
+  All pins on module pins 15-19 (adjacent block)
 ================================================================================
-  Pin │ Name    │ Type  │ Connection Chain
+  Pin | Name    | Type  | Connection Chain
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
-  16  │ IO12    │ I/O   │   pin16 IO12 ─── SPI1_SCLK ──→ ADS1291 SCLK
-  15  │ IO11    │ I/O   │   pin15 IO11 ─── SPI1_MOSI ──→ ADS1291 DIN
-  17  │ IO13    │ I/O   │   pin17 IO13 ←── SPI1_MISO ──→ ADS1291 DOUT
-  18  │ IO14    │ I/O   │   pin18 IO14 ─── SPI1_CS   ──→ ADS1291 ~CS
-      │         │       │
-  25  │ IO21    │ I/O   │   pin25 IO21 ←── DRDY ──────→ ADS1291 ~DRDY
-      │         │       │   IRQ from AFE (data ready)
-      │         │       │   Note: Route separately from SPI2 — opposite sides of PCB
+  15  | IO11    | I/O   |   pin15 IO11 --- SPI1_MOSI --> ADS1291 DIN
+  16  | IO12    | I/O   |   pin16 IO12 --- SPI1_SCLK --> ADS1291 SCLK
+  17  | IO13    | I/O   |   pin17 IO13 <-- SPI1_MISO --> ADS1291 DOUT
+  18  | IO14    | I/O   |   pin18 IO14 --- SPI1_CS   --> ADS1291 ~CS
+  19  | IO15    | I/O   |   pin19 IO15 <-- DRDY -------> ADS1291 ~DRDY
+      |         |       |   IRQ from AFE (data ready)
+      |         |       |   Note: Route separately from display section — opposite sides of PCB
 
 ================================================================================
-  SPI BUS 2 (NOISY) — GC9A01 Display  (40MHz, 3.3V)
+  SPI BUS 2 (NOISY) — ST7789V Display  (40MHz, 3.3V)
+  All pins on module pins 30-37 (adjacent block)
 ================================================================================
-  Pin │ Name    │ Type  │ Connection Chain
+  Pin | Name    | Type  | Connection Chain
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
-   8  │ IO4     │ I/O   │   pin08 IO4  ─── SPI2_CS  ──→ GC9A01 ~CS
-  19  │ IO15    │ I/O   │   pin19 IO15 ─── SPI2_DC  ──→ GC9A01 DC
-  20  │ IO16    │ I/O   │   pin20 IO16 ─── SPI2_RST ──→ GC9A01 ~RST
-  21  │ IO17    │ I/O   │   pin21 IO17 ─── SPI2_MOSI ─→ GC9A01 MOSI (SDA)
-  22  │ IO18    │ I/O   │   pin22 IO18 ─── SPI2_SCLK ─→ GC9A01 SCLK
+  30  | IO48    | I/O   |   pin30 IO48 --- SPI2_BLK  --> BSS138 gate (backlight PWM)
+  31  | IO35    | I/O   |   pin31 IO35 --- SPI2_CS   --> ST7789V ~CS
+  32  | IO36    | I/O   |   pin32 IO36 --- SPI2_DC   --> ST7789V DC
+  33  | IO37    | I/O   |   pin33 IO37 --- SPI2_RST  --> ST7789V ~RST
+  34  | IO38    | I/O   |   pin34 IO38 --- SPI2_SCLK --> ST7789V SCL
+  35  | IO39    | I/O   |   pin35 IO39 --- SPI2_MOSI --> ST7789V SDA
 
 ================================================================================
   DISPLAY BACKLIGHT PWM  (via BSS138 N-FET)
 ================================================================================
-  Pin │ Name    │ Type  │ Connection Chain
+  Pin | Name    | Type  | Connection Chain
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
-  11  │ IO7     │ I/O   │   pin11 IO7 ─── R_gate[1k, 0402, 1%] ── BSS138(G)
-      │         │       │   Net label: SPI2_BLK
-      │         │       │
-      │         │       │   BSS138 pathway:
-      │         │       │     +3.3V ─── R_drain[15, 0402, 1%] ── GC9A01(BLK)
-      │         │       │                                              ↑
-      │         │       │     pin11 ─── 1k ── BSS138(G) ── BSS138(D) ┘
-      │         │       │                                │
-      │         │       │                           BSS138(S) ─── GND
-      │         │       │
-      │         │       │   PWM frequency: ~1-5kHz recommended
-      │         │       │   R_drain 15 limits inrush to backlight LED
+  30  | IO48    | I/O   |   pin30 IO48 --- R_gate[1k, 0402, 1%] -- BSS138(G)
+      |         |       |   Net label: SPI2_BLK
+      |         |       |
+      |         |       |   BSS138 pathway:
+      |         |       |     +3.3V --- R_drain[15, 0402, 1%] -- ST7789V(BLK)
+      |         |       |                                              |
+      |         |       |     pin30 --- 1k --- BSS138(G) -- BSS138(D) +
+      |         |       |                                |
+      |         |       |                           BSS138(S) --- GND
+      |         |       |
+      |         |       |   PWM frequency: ~1-5kHz recommended
+      |         |       |   R_drain 15 limits inrush to backlight LED
+
+================================================================================
+  DISPLAY TOUCH I2C BUS 1 — Capacitive Touch Controller  (3.3V, 400kHz)
+================================================================================
+  Pin | Name    | Type  | Connection Chain
+──────┼─────────┼───────┼────────────────────────────────────────────────────────
+  36  | IO40    | I/O   |    +3.3V --- R_I2C1_pu[4.7k, 0402, 1%] --- Touch_SDA
+      |         |       |                                              |
+      |         |       |                                    Touch IC SDA (e.g., CST816)
+      |         |       |
+      |         |       |   Net label: TOUCH_SDA
+      |         |       |   Address: 0x15 (CST816 typical)
+
+  37  | IO41    | I/O   |    +3.3V --- R_I2C1_pu[4.7k, 0402, 1%] --- Touch_SCL
+      |         |       |                                              |
+      |         |       |                                    Touch IC SCL (e.g., CST816)
+      |         |       |
+      |         |       |   Net label: TOUCH_SCL
+      |         |       |   Note: Separate I2C bus from BMI270 (different addresses OK,
+      |         |       |   but physically separate bus avoids noise coupling)
 
 ================================================================================
   BATTERY VOLTAGE MONITOR  (ADC via 100k/100k divider)
 ================================================================================
-  Pin │ Name    │ Type  │ Connection Chain
-──────┼─────────┼───────┼────────────────────────────────────────────────────────
-  12  │ IO8     │ I/O   │   Li-Po(+) ─── R_top[100k, 0402, 1%] ──┬── pin12 IO8
-      │         │ ADC    │                                          │
-      │         │        │   GND ───────── R_bot[100k, 0402, 1%] ──┘
-      │         │        │
-      │         │        │   Range: Li-Po 3.0-4.2V -> divider output 1.5-2.1V
-      │         │        │   (within ESP32-S3 ADC range 0-2.5V typical)
-      │         │        │   Note: IO8 has no internal pull; ADC mode = Hi-Z
-      │         │        │   -> C_adc_bypass[100nF, 0402, X7R] ── GND at divider tap
+  Pin | Name    | Type   | Connection Chain
+──────┼─────────┼────────┼────────────────────────────────────────────────────────
+  12  | IO8     | I/O    |   Li-Po(+) --- R_top[100k, 0402, 1%] --+-- pin12 IO8
+      |         | ADC    |                                          |
+      |         |        |   GND --------- R_bot[100k, 0402, 1%] --+
+      |         |        |
+      |         |        |   Range: Li-Po 3.0-4.2V -> divider output 1.5-2.1V
+      |         |        |   (within ESP32-S3 ADC range 0-2.5V typical)
+      |         |        |   Note: IO8 has no internal pull; ADC mode = Hi-Z
+      |         |        |   -> C_adc_bypass[100nF, 0402, X7R] --- GND at divider tap
 
 ================================================================================
   USER INPUT — EVENT BUTTON
 ================================================================================
-  Pin │ Name    │ Type  │ Connection Chain
+  Pin | Name    | Type  | Connection Chain
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
-  13  │ IO9     │ I/O   │    pin13 IO9
-      │         │       │      │
-      │         │       │      └── SW1 (side tactile) ─── GND  (active LOW)
-      │         │       │
-      │         │       │   Net label: BTN_EVENT
-      │         │       │   Debounce: use internal pull-up (~45k) in firmware.
-      │         │       │   No external pull-up needed — saves component.
-      │         │       │   IRQ on falling edge.
+  13  | IO9     | I/O   |    pin13 IO9
+      |         |       |      |
+      |         |       |      +-- SW1 (side tactile) --- GND  (active LOW)
+      |         |       |
+      |         |       |   Net label: BTN_EVENT
+      |         |       |   Debounce: use internal pull-up (~45k) in firmware.
+      |         |       |   No external pull-up needed — saves component.
+      |         |       |   IRQ on falling edge.
 
 ================================================================================
   HAPTIC DRIVER — ERM Coin Motor  (via MMBT2222A NPN)
 ================================================================================
-  Pin │ Name    │ Type  │ Connection Chain
+  Pin | Name    | Type  | Connection Chain
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
-  14  │ IO10    │ I/O   │   pin14 IO10 ─── R_base[1k, 0402, 1%] ── MMBT2222A(B)
-      │         │       │   Net label: HAPTIC_PWM
-      │         │       │
-      │         │       │   MMBT2222A pathway:
-      │         │       │     pin14 ─── 1k ──┬── MMBT2222A(B)
-      │         │       │                     │
-      │         │       │               MMBT2222A(E) ─── GND
-      │         │       │                     │
-      │         │       │               MMBT2222A(C) ──┬── 1027 ERM(+) ── +3.3V
-      │         │       │                              │
-      │         │       │                    1N4148W(C) │ (flyback cathode)
-      │         │       │                              │
-      │         │       │                    1N4148W(A) ┘ (flyback anode)
-      │         │       │
-      │         │       │   Flyback diode 1N4148W MANDATORY:
-      │         │       │   Without it: >10V inductive spike corrupts I2C + GPIO
-      │         │       │   PWM freq: ~200-300Hz for ERM (tactile sensation)
+  14  | IO10    | I/O   |   pin14 IO10 --- R_base[1k, 0402, 1%] -- MMBT2222A(B)
+      |         |       |   Net label: HAPTIC_PWM
+      |         |       |
+      |         |       |   MMBT2222A pathway:
+      |         |       |     pin14 --- 1k --+-- MMBT2222A(B)
+      |         |       |                     |
+      |         |       |               MMBT2222A(E) --- GND
+      |         |       |                     |
+      |         |       |               MMBT2222A(C) --+-- 1027 ERM(+) -- +3.3V
+      |         |       |                              |
+      |         |       |                    1N4148W(C) | (flyback cathode)
+      |         |       |                              |
+      |         |       |                    1N4148W(A) + (flyback anode)
+      |         |       |
+      |         |       |   Flyback diode 1N4148W MANDATORY:
+      |         |       |   Without it: >10V inductive spike corrupts I2C + GPIO
+      |         |       |   PWM freq: ~200-300Hz for ERM (tactile sensation)
 
 ================================================================================
   USB SERIAL / JTAG  (Native USB Serial + JTAG)
 ================================================================================
-  Pin │ Name    │ Type  │ Connection Chain
+  Pin | Name    | Type  | Connection Chain
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
-  23  │ USB_D-  │ I/O   │   pin23 USB_D- ─── USB-C D-  (direct trace)
-      │ IO19    │       │   Series termination: R_USB[22, 0402, 1%] recommended
-      │ (alt)   │       │   if trace > 50mm (place near ESP32)
-  24  │ USB_D+  │ I/O   │   pin24 USB_D+ ─── USB-C D+  (direct trace)
-      │ IO20    │       │   Series termination: R_USB[22, 0402, 1%] recommended
-      │ (alt)   │       │   if trace > 50mm (place near ESP32)
-      │         │       │
-      │         │       │   VBUS ESD protection (at USB-C connector):
-      │         │       │     USB-C VBUS ── USBLC6-2SC6 (D3, ESD clamp) ── GND
-      │         │       │     CC1/CC2 ─── R_CC[5.1k, 0402, 1%] ─── GND
-      │         │       │
-      │         │       │   ESP32-S3 has built-in USB-serial-JTAG controller.
-      │         │       │   No external USB-serial chip needed.
-      │         │       │   Traces: 90-ohm differential impedance, length match +-2mm
+  23  | USB_D-  | I/O   |   pin23 USB_D- --- USB-C D-  (direct trace)
+      | IO19    |       |   Series termination: R_USB[22, 0402, 1%] recommended
+      | (alt)   |       |   if trace > 50mm (place near ESP32)
+  24  | USB_D+  | I/O   |   pin24 USB_D+ --- USB-C D+  (direct trace)
+      | IO20    |       |   Series termination: R_USB[22, 0402, 1%] recommended
+      | (alt)   |       |   if trace > 50mm (place near ESP32)
+      |         |       |
+      |         |       |   VBUS ESD protection (at USB-C connector):
+      |         |       |     USB-C VBUS -- USBLC6-2SC6 (D3, ESD clamp) --- GND
+      |         |       |     CC1/CC2 --- R_CC[5.1k, 0402, 1%] --- GND
+      |         |       |
+      |         |       |   ESP32-S3 has built-in USB-serial-JTAG controller.
+      |         |       |   No external USB-serial chip needed.
+      |         |       |   Traces: 90-ohm differential impedance, length match +/-2mm
 
 ================================================================================
-  UNUSED PINS  (—x)
+  UNUSED PINS  (--x)
 ================================================================================
-  Pin │ Name    │ Type  │ Recommendation
+  Pin | Name    | Type  | Recommendation
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
-   7  │ IO3     │ I/O   │   —x   Not connected.
-      │  (S)    │       │   Strapping pin (internal pull-up).
-      │         │       │   Can leave NC. Do NOT pull down externally.
+   7  | IO3     | I/O   |   --x   Not connected.
+      |  (S)    |       |   Strapping pin (internal pull-up).
+      |         |       |   Can leave NC. Do NOT pull down externally.
 
-   9  │ IO5     │ I/O   │   —x   Not connected.
-  10  │ IO6     │ I/O   │   —x   Not connected.
-  26  │ IO26    │ I/O   │   —x   Not connected.
-  27  │ IO47    │ I/O   │   —x   Not connected.
-  28  │ IO33    │ I/O   │   —x   Not connected.
-  29  │ IO34    │ I/O   │   —x   Not connected.
-  30  │ IO48    │ I/O   │   —x   Not connected.
-  31  │ IO35    │ I/O   │   —x   Not connected.
-  32  │ IO36    │ I/O   │   —x   Not connected.
-  33  │ IO37    │ I/O   │   —x   Not connected.
-  34  │ IO38    │ I/O   │   —x   Not connected.
-  35  │ IO39    │ I/O   │   —x   Not connected.
-  36  │ IO40    │ I/O   │   —x   Not connected.
-  37  │ IO41    │ I/O   │   —x   Not connected.
-  38  │ IO42    │ I/O   │   —x   Not connected.
+   8  | IO4     | I/O   |   --x   Not connected (freed from SPI2_CS).
+   9  | IO5     | I/O   |   --x   Not connected.
+  10  | IO6     | I/O   |   --x   Not connected.
+  11  | IO7     | I/O   |   --x   Not connected (freed from SPI2_BLK).
+  20  | IO16    | I/O   |   --x   Not connected (freed from SPI2_RST).
+  21  | IO17    | I/O   |   --x   Not connected (freed from SPI2_MOSI).
+  22  | IO18    | I/O   |   --x   Not connected (freed from SPI2_SCLK).
+  25  | IO21    | I/O   |   --x   Not connected (freed from DRDY).
+  26  | IO26    | I/O   |   --x   Not connected.
+  38  | IO42    | I/O   |   --x   Not connected (spare near display block).
+  41  | IO45    | I/O   |   --x   Not connected.
+      |         |       |   Note: VDD_SPI eFuse is factory-burned on the
+      |         |       |   MINI-1 module. GPIO45 strapping is ignored.
+      |         |       |   No pull resistor needed — leave NC.
 
-  41  │ IO45    │ I/O   │   —x   Not connected.
-      │         │       │   Note: VDD_SPI eFuse is factory-burned on the
-      │         │       │   MINI-1 module. GPIO45 strapping is ignored.
-      │         │       │   No pull resistor needed — leave NC.
-
-  44  │ IO46    │ I/O   │   —x   Not connected.
-      │  (S)    │       │   Strapping pin (internal pull-down).
-      │         │       │   Can leave NC. Do NOT pull high externally.
-      │         │       │   (GPIO0=0 + GPIO46=1 is an invalid strapping combo.)
+  44  | IO46    | I/O   |   --x   Not connected.
+      |  (S)    |       |   Strapping pin (internal pull-down).
+      |         |       |   Can leave NC. Do NOT pull high externally.
+      |         |       |   (GPIO0=0 + GPIO46=1 is an invalid strapping combo.)
 
 ================================================================================
   TEST POINTS  (TP — physically present, not NC)
 ================================================================================
-  Pin │ Name    │ Type  │ Recommendation
+  Pin | Name    | Type  | Recommendation
 ──────┼─────────┼───────┼────────────────────────────────────────────────────────
-  39  │ TXD0    │ I/O   │   TP   Break out to test point TP_TXD for debug UART.
-      │ IO43    │       │   Leave unpopulated in production; use only during
-      │         │       │   firmware development. Not fitted = no EMI risk.
-  40  │ RXD0    │ I/O   │   TP   Break out to test point TP_RXD for debug UART.
-      │ IO44    │       │   Leave unpopulated in production.
+  39  | TXD0    | I/O   |   TP   Break out to test point TP_TXD for debug UART.
+      | IO43    |       |   Leave unpopulated in production; use only during
+      |         |       |   firmware development. Not fitted = no EMI risk.
+  40  | RXD0    | I/O   |   TP   Break out to test point TP_RXD for debug UART.
+      | IO44    |       |   Leave unpopulated in production.
 
 ================================================================================
   DECOUPLING CAPACITOR SUMMARY
 ================================================================================
-  Location               │ Value     │ Qty │ Notes
+  Location               | Value     | Qty | Notes
 ─────────────────────────┼───────────┼─────┼──────────────────────────────────────
-  At pin3 VDD3P3         │ 100nF     │  1  │ 0402 X7R 6.3V, place <2mm from pin
-  At pin3 VDD3P3         │ 10uF      │  1  │ 0603 X7R 6.3V
-  At pin45 EN (RC delay) │ 1uF       │  1  │ 0402 X7R 6.3V, to GND
-  +3.3V rail (LDO out)   │ 100nF     │  1  │ 0402 X7R 6.3V
-  +3.3V rail (LDO out)   │ 10uF      │  1  │ 0603 X7R 6.3V
-  IO8 ADC divider tap    │ 100nF     │  1  │ 0402 X7R, bypass to GND
-  ADS1291 AVDD           │ 100nF + 1uF │ 2 │ via 600-ohm ferrite bead FB1
-  ADS1291 DVDD           │ 100nF + 1uF │ 2 │
-  ADS1291 VREF           │ 1uF       │  1  │ X7R
-  GC9A01 VCC             │ 100nF     │  1  │ 0402, at display FPC connector
-  GC9A01 VCC             │ 10uF      │  1  │ 0603, at display FPC connector
-  BMI270 VDD             │ 100nF     │  1  │ 0402, within 0.5mm
-  BMI270 VDDIO           │ 100nF     │  1  │ 0402, within 0.5mm
+  At pin3 VDD3P3         | 100nF     |  1  | 0402 X7R 6.3V, place <2mm from pin
+  At pin3 VDD3P3         | 10uF      |  1  | 0603 X7R 6.3V
+  At pin45 EN (RC delay) | 1uF       |  1  | 0402 X7R 6.3V, to GND
+  +3.3V rail (LDO out)   | 100nF     |  1  | 0402 X7R 6.3V
+  +3.3V rail (LDO out)   | 10uF      |  1  | 0603 X7R 6.3V
+  IO8 ADC divider tap    | 100nF     |  1  | 0402 X7R, bypass to GND
+  ADS1291 AVDD           | 100nF + 1uF | 2 | via 600-ohm ferrite bead FB1
+  ADS1291 DVDD           | 100nF + 1uF | 2 |
+  ADS1291 VREF           | 1uF       |  1  | X7R
+  ST7789V VCC            | 100nF     |  1  | 0402, at display FPC connector
+  ST7789V VCC            | 10uF      |  1  | 0603, at display FPC connector
+  BMI270 VDD             | 100nF     |  1  | 0402, within 0.5mm
+  BMI270 VDDIO           | 100nF     |  1  | 0402, within 0.5mm
 
 ================================================================================
   PULL-UP / PULL-DOWN / BIAS RESISTOR SUMMARY
 ================================================================================
-  Resistor               │ Value     │ Qty │ Purpose
+  Resistor               | Value     | Qty | Purpose
 ─────────────────────────┼───────────┼─────┼──────────────────────────────────────
-  R_EN_pu                │ 10k 1%    │  1  │ EN pull-up to +3.3V
-  R_boot_pu              │ 10k 1%    │  1  │ IO0 pull-up to +3.3V
-  R_I2C_pu_SDA           │ 4.7k 1%   │  1  │ I2C SDA pull-up to +3.3V
-  R_I2C_pu_SCL           │ 4.7k 1%   │  1  │ I2C SCL pull-up to +3.3V
-  R_gate_BL              │ 1k 1%     │  1  │ BSS138 gate series resistor
-  R_drain_BL             │ 15 1%     │  1  │ Backlight current limit
-  R_base_haptic          │ 1k 1%     │  1  │ MMBT2222A base resistor
-  R_batt_top             │ 100k 1%   │  1  │ Battery divider top
-  R_batt_bot             │ 100k 1%   │  1  │ Battery divider bottom
-  R_AAF1, R_AAF2         │ 4.99k 0.1% │ 2 │ ADS1291 anti-alias (matched pair)
-  R_USB_series           │ 22 1%     │  2  │ USB D+/D- series termination (optional)
-  R_CC1, R_CC2           │ 5.1k 1%   │  2  │ USB-C CC1/CC2 to GND
-  R_RLD_fb               │ 100k 1%   │  1  │ ADS1291 RLD feedback
+  R_EN_pu                | 10k 1%    |  1  | EN pull-up to +3.3V
+  R_boot_pu              | 10k 1%    |  1  | IO0 pull-up to +3.3V
+  R_I2C0_pu_SDA          | 4.7k 1%   |  1  | I2C0 (BMI270) SDA pull-up to +3.3V
+  R_I2C0_pu_SCL          | 4.7k 1%   |  1  | I2C0 (BMI270) SCL pull-up to +3.3V
+  R_I2C1_pu_SDA          | 4.7k 1%   |  1  | I2C1 (Touch) SDA pull-up to +3.3V
+  R_I2C1_pu_SCL          | 4.7k 1%   |  1  | I2C1 (Touch) SCL pull-up to +3.3V
+  R_gate_BL              | 1k 1%     |  1  | BSS138 gate series resistor
+  R_drain_BL             | 15 1%     |  1  | Backlight current limit
+  R_base_haptic          | 1k 1%     |  1  | MMBT2222A base resistor
+  R_batt_top             | 100k 1%   |  1  | Battery divider top
+  R_batt_bot             | 100k 1%   |  1  | Battery divider bottom
+  R_AAF1, R_AAF2         | 4.99k 0.1% | 2 | ADS1291 anti-alias (matched pair)
+  R_USB_series           | 22 1%     |  2  | USB D+/D- series termination (optional)
+  R_CC1, R_CC2           | 5.1k 1%   |  2  | USB-C CC1/CC2 to GND
+  R_RLD_fb               | 100k 1%   |  1  | ADS1291 RLD feedback
 
   Note: R_btn_pu (IO9) removed — use internal pull-up in firmware.
 
@@ -303,10 +320,16 @@
                       - Added IO8 ADC bypass cap to decoupling summary
                       - Fixed typo PSRAM, removed stray characters
                       - Cleaned up strapping summary for IO46
+  v1.2 — 2026-05-02  Display and SPI relocation:
+                      - Changed display from GC9A01 to ST7789V + capacitive touch
+                      - Moved SPI2 + backlight to module pins 30-35 (adjacent block)
+                      - Added I2C1 touch bus on module pins 36-37
+                      - Moved DRDY from pin 25 to pin 19 (adjacent to SPI1)
+                      - SPI1 now contiguous on pins 15-19
 
 ================================================================================
   END OF PIN MAP
   Sources: ESP32-S3-MINI-1 Datasheet v1.5 | System Block Diagram Rev 1.0
            | Project gen_sch.py | ADS1291 datasheet | BMI270 datasheet
-  Author: Auto-generated  |  Date: 2026-04-30
+  Author: Auto-generated  |  Date: 2026-05-02
 ================================================================================
